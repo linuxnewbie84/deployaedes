@@ -7,6 +7,10 @@ import os
 rute = "imagenesr/"
 
 router = APIRouter()
+@router.get("/", tags=["Bienvenida"])
+async def home():
+    return HTMLResponse("<h1>Bienvenido Ovitraap</h1>")
+
 @router.post("/subir/", tags=["Subida de Archivos"])
 async def upload_huevos(file:UploadFile =File(...)):
     file.filename = f"{uuid4()}.jpg"
