@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 from uuid import uuid4
-from fastapi.responses import HTMLResponse
+from fastapi.responses import JSONResponse, FileResponse
 
 
 ruta = 'resultados/'
@@ -43,12 +43,13 @@ class img:
         cv2.putText(huevr, hallazgos, (10,20),cv2.FONT_HERSHEY_SIMPLEX,0.7, (255,0,0),1)
         nom = f"{uuid4()}.jpg"
         cv2.imwrite(ruta+nom, huevr)
-        return HTMLResponse("""<h1>La imagen ha sido procesada y guardada con el nombre: {},</h1> 
-<h2>Y se han encontrado *{}* huevesillos del Mosquito Aedes Aegyptip </h2>""".format(nom,len(contornos)))
+        return JSONResponse(f"La imagen ha sido procesada y guardada con el nombre: {nom} y se han encontrado *{len(contornos)}* huevesillos del Mosquito Aedes Aegyptip")        
+        #return HTMLResponse("""<h1>La imagen ha sido procesada y guardada con el nombre: {},</h1> 
+#<h2>Y se han encontrado *{}* huevesillos del Mosquito Aedes Aegyptip </h2>""".format(nom,len(contornos)))
 
 #!!Aplicación del algoritmo Watershed   
 class imgw :
-    def __init__(self, r:str):
+    def __init__(self, r):
         self.r = r
     
     def wather(self):

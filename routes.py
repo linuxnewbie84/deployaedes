@@ -1,21 +1,19 @@
 from fastapi import APIRouter, UploadFile, File
-from fastapi.responses import HTMLResponse
+from fastapi.responses import JSONResponse, HTMLResponse, FileResponse
 from uuid import uuid4
 from trataima import img, imgw
-from pydantic import BaseModel, ValidationError
 
-class f(BaseModel):
-    file = File    
 
 rute = "imagenesr/"
+ruta = "resultados/"
 
 router = APIRouter()
 @router.get("/", tags=["Bienvenida"])
 async def home():
-    return HTMLResponse("<h1>Bienvenido Ovitraap</h1>")
+    return JSONResponse({"home":"Bienvenidos"})
 
 @router.post("/subir", tags=["Subida de Archivos"])
-async def upload_huevos(file:UploadFile =File(...)) -> f:
+async def upload_huevos(file:UploadFile =File(...)):
     if file.content_type == "image/jpeg":
         recibido = await file.read()
         file.filename = f"{uuid4()}.jpg"
@@ -26,7 +24,8 @@ async def upload_huevos(file:UploadFile =File(...)) -> f:
             l2 = imgw(rute+ file.filename)   
         return  l.trar()
     else:
-        return HTMLResponse(f"<h1> Tu archivo es un {file.content_type}, y se necesitan archivos de imagen/h1>")
+        return JSONResponse(f"Tu archivo es un {file.content_type}, y solo se pueden procesar archivos de imagen")
     #Se termina el tratamiento de imagenes y se guardan
-   
-   
+@router.get("/recibir/{file}",tags=["Descargas"])
+async def dow(file:str):
+   return FileResponse(ruta+file)
