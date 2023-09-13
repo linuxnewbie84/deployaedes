@@ -1,16 +1,18 @@
-from fastapi import APIRouter, UploadFile, File
+from fastapi import APIRouter, UploadFile, File, Request
 from fastapi.responses import JSONResponse, HTMLResponse, FileResponse
 from uuid import uuid4
 from trataima import img, imgw
+from fastapi.templating import Jinja2Templates
 
 
 rute = "imagenesr/"
 ruta = "resultados/"
+template= Jinja2Templates(directory="templates")
 
 router = APIRouter()
-@router.get("/", tags=["Bienvenida"])
-async def home():
-    return JSONResponse({"home":"Bienvenidos"})
+@router.get("/", tags=["Bienvenida"], response_class=HTMLResponse)
+async def home(request:Request):
+    return template.TemplateResponse("index.html", {"request": request})
 
 @router.post("/subir", tags=["Subida de Archivos"])
 async def upload_huevos(file:UploadFile =File(...)):
