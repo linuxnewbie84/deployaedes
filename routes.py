@@ -28,4 +28,4 @@ async def upload_huevos(file:UploadFile =File(...)):
     #Se termina el tratamiento de imagenes y se guardan
 @router.get("/recibir/{file}",tags=["Descargas"])
 async def dow(file:str):
-   return FileResponse(ruta+file)
+    return FileResponse(ruta+file)
