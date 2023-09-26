@@ -30,4 +30,4 @@ async def upload_huevos(file:UploadFile =File(...)):
     #Se termina el tratamiento de imagenes y se guardan
 @router.get("/recibir/",tags=["Descargas"])
 async def dow(file:str):
-    return FileResponse(ruta+file, media_type='application/octet-stream', filename=file)
+    return FileResponse(ruta+file)
