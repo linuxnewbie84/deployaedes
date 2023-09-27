@@ -5,9 +5,13 @@
         <div class="panel-heading"><b>Conteo de Huevesillo</b></div>
         <div class="panel-body">
             <form id="uploadImage" method="post" action="/subir" enctype="multipart/form-data">
+                <div class="row mb-4">
+                    <div class="col-md-4 col-lg-4 "></div>
+                    <div class="col-md-6 col-lg-8"></div>
+                </div>
                 <div class="form-group">
                     <label>Subir imagen de Ovitrampa</label>
-                    <input type="file" name="file" multiple="true" id="file" />
+                    <input type="file" name="file" multiple="false" id="file" />
                 </div>
                 <div class="form-group">
                     <input type="submit" id="uploadSubmit" value="Enviar" class="btn btn-info" />
@@ -21,6 +25,10 @@
         <div class="panel-heading"><b>Resultados</b></div>
         <div class="panel-body">
             <form id="Recibirimagen" method="get" action="/recibir/" enctype="text/plain">
+                <div class="row mb-4">
+                    <div class="col-md-6 col-lg-4 "></div>
+                    <div class="col-md-6 col-lg-8"></div>
+                </div>
                 <div class"form-group">
                     <label for="file">Recibir Imagen de Resultados</label>
                     <input type="text" name="file" maxlength ="40" required/>

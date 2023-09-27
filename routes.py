@@ -27,7 +27,8 @@ async def upload_huevos(file:UploadFile =File(...)):
         return  l.trar()
     else:
         return JSONResponse(f"Tu archivo es un {file.content_type}, y solo se pueden procesar archivos de imagen extensión jpeg")
+        #return JSONResponse(f"Tu archivo es un {file.content_type}, y solo se pueden procesar archivos de imagen extensión jpeg", file.content_type)
     #Se termina el tratamiento de imagenes y se guardan
-@router.get("/recibir/",tags=["Descargas"])
+@router.get("/recibir/",tags=["Visualizar"])
 async def dow(file:str):
     return FileResponse(ruta+file)
