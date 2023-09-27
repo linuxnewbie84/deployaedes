@@ -36,14 +36,14 @@ class img:
         
         #cv2.imwrite(ruta, huevr, )
         
-        print("He encontrado {} huevesillos de Aedes Aegypti".format(len(contornos)))
+        print("He encontrado {} huevecillos de Aedes Aegypti".format(len(contornos)))
         
         cv2.drawContours(huevr,contornos,-1,(0,0,255), 2)
         hallazgos = "Huevesillos Encontrados: " + str(len(contornos))
         cv2.putText(huevr, hallazgos, (10,20),cv2.FONT_HERSHEY_SIMPLEX,0.7, (255,0,0),1)
         nom = f"{uuid4()}.jpg"
         cv2.imwrite(ruta+nom, huevr)
-        return JSONResponse(f"La imagen ha sido procesada y guardada con el nombre: {nom} y se han encontrado *{len(contornos)}* huevesillos del Mosquito Aedes Aegyptip")        
+        return JSONResponse(f"La imagen ha sido procesada y guardada con el nombre: {nom} y se han encontrado *{len(contornos)}* huevecillos del Mosquito Aedes Aegyptip")        
         #return HTMLResponse("""<h1>La imagen ha sido procesada y guardada con el nombre: {},</h1> 
 #<h2>Y se han encontrado *{}* huevesillos del Mosquito Aedes Aegyptip </h2>""".format(nom,len(contornos)))
 
