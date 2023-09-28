@@ -39,7 +39,7 @@ class img:
         print("He encontrado {} huevecillos de Aedes Aegypti".format(len(contornos)))
         
         cv2.drawContours(huevr,contornos,-1,(0,0,255), 2)
-        hallazgos = "Huevesillos Encontrados: " + str(len(contornos))
+        hallazgos = "Huevecillos Encontrados: " + str(len(contornos))
         cv2.putText(huevr, hallazgos, (10,20),cv2.FONT_HERSHEY_SIMPLEX,0.7, (255,0,0),1)
         nom = f"{uuid4()}.jpg"
         cv2.imwrite(ruta+nom, huevr)
