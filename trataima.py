@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 from uuid import uuid4
+from matplotlib import pyplot as pl
 from fastapi.responses import JSONResponse, FileResponse
 
 
@@ -32,13 +33,13 @@ class img:
         borde = cv2.Canny(gaus, 50, 125)
         
         #cv2.imshow("Bordes", borde)
-        (contornos,_) = cv2.findContours(borde.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        (contornos,_) = cv2.findContours(borde.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
         
         #cv2.imwrite(ruta, huevr, )
         
         print("He encontrado {} huevecillos de Aedes Aegypti".format(len(contornos)))
         
-        cv2.drawContours(huevr,contornos,-1,(0,0,255), 2)
+        cv2.drawContours(huevr,contornos,-1,(0,0,255), 5)
         hallazgos = "Huevecillos Encontrados: " + str(len(contornos))
         cv2.putText(huevr, hallazgos, (10,20),cv2.FONT_HERSHEY_SIMPLEX,0.7, (255,0,0),1)
         nom = f"{uuid4()}.jpg"
@@ -57,7 +58,7 @@ class imgw :
         escalas = cv2.cvtColor(huevos, cv2.COLOR_BGR2GRAY) #*Binaria
         
         #*Umbral Otsu para estimar los objetos
-        _, limite= cv2.threshold(escalas, 0,255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+        ret, limite= cv2.threshold(escalas, 0,255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
         
         #*Apertura morfologica para eliminar el ruido
         k = np.ones((3,3), np.uint8) #dimensiones
@@ -68,7 +69,7 @@ class imgw :
         
         #*Transfomación de distancias de primer plano
         d_t= cv2.distanceTransform(op, cv2.DIST_L2, maskSize=5)
-        _, pplano = cv2.threshold(d_t,0.7*d_t.max(),255,0)
+        ret, pplano = cv2.threshold(d_t,0.7*d_t.max(),255,0)
         pplano = np.uint8(pplano)
         
         #cv2.imshow("Primer", pplano)
@@ -77,15 +78,15 @@ class imgw :
         nose=cv2.subtract(b,pplano)
         
         #*Marcadores
-        _, marcadores= cv2.connectedComponents(pplano)
+        ret, marcadores= cv2.connectedComponents(pplano)
         marcadores = marcadores+1 #Sumanos los marcadores para que no se consideres una región desconocdida
         
         marcadores[nose == 255]= 0
         
         #*Aplicamos en algoritmo Watershed a nuestra imagen original
         marcadores = cv2.watershed(huevos,marcadores)
-        huevos[marcadores==-1]= [0,0,255]
-        cv2.imshow("Huebos",huevos)
+        huevos[marcadores==-1]= [255,0,0]
+        cv2.imshow("Huevos",huevos)
         #nom = f"{uuid4()}.jpg"
         
         

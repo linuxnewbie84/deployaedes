@@ -24,7 +24,7 @@ async def upload_huevos(file:UploadFile =File(...)):
             huevesillor.close()
             l = img(rute + file.filename)
             l2 = imgw(rute+ file.filename)   
-        return  l.trar()
+        return l.trar()
     else:
         return JSONResponse(f"Tu archivo es un {file.content_type}, y solo se pueden procesar archivos de imagen extensión jpeg")
         #return JSONResponse(f"Tu archivo es un {file.content_type}, y solo se pueden procesar archivos de imagen extensión jpeg", file.content_type)

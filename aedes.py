@@ -3,6 +3,8 @@ from fastapi import FastAPI
 from routes import router
 
 app = FastAPI()
+app.title = "Ovitraap"
+app.version = "1.6"
 
 app.include_router(router)
 
